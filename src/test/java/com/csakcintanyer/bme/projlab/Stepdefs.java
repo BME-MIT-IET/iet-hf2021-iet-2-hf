@@ -41,6 +41,7 @@ public class Stepdefs {
         Eskimo eskimo = new Eskimo(0);
         characters.add(eskimo);
         character = eskimo;
+        character.setEnergy(40);
 
         eskimo.setIceBlock(map.getBlocks().get(0).get(0));
         map.getBlocks().get(0).get(0).getEntities().add(eskimo);
@@ -53,6 +54,7 @@ public class Stepdefs {
         Explorer explorer = new Explorer(0);
         characters.add(explorer);
         character = explorer;
+        character.setEnergy(40);
 
         explorer.setIceBlock(map.getBlocks().get(0).get(0));
         map.getBlocks().get(0).get(0).getEntities().add(explorer);
@@ -94,5 +96,45 @@ public class Stepdefs {
     public void the_block_is_checked() {
         assertEquals(map.getBlocks().get(0).get(0).isChecked(), true);
     }
+
+    @Given("The items for win the game are placed on each block")
+    public void the_items_for_win_the_game_are_placed_on_each_block() {
+        map.getBlocks().get(0).get(0).setItem(new Flare());
+        map.getBlocks().get(0).get(1).setItem(new Bullet());
+        map.getBlocks().get(0).get(2).setItem(new Gun());
+    }
+
+    @When("The character picks up the item")
+    public void the_character_picks_up_the_item() {
+        character.pickUp();
+    }
+
+    @When("The character fires the gun")
+    public void the_character_fires_the_gun() {
+        character.useItem(0);
+    }
+
+    @Then("The player should have won")
+    public void the_player_should_have_won() {
+
+        assertEquals(game.isWin(), true);
+    }
+    @Given("We have an unstable map")
+    public void we_have_an_unstable_map() {
+        ArrayList<IceBlock> rowBlocks =new ArrayList<IceBlock>();
+        ArrayList<ArrayList<IceBlock>> blocks = new ArrayList<ArrayList<IceBlock>>();
+
+        rowBlocks.add(new StableBlock(0));
+        rowBlocks.add(new EmptyBlock(0));
+
+        blocks.add(rowBlocks);
+        map = new IceMap(blocks);
+    }
+
+    @Then("The character starts drowning")
+    public void the_character_starts_drowning() {
+        assertEquals(character.isDrowning(), true);
+    }
+
 }
 
