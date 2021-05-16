@@ -1,5 +1,13 @@
 package com.csakcintanyer.bme.projlab;
 
+import com.csakcintanyer.bme.projlab.gamelogic.entity.Bear;
+import com.csakcintanyer.bme.projlab.gamelogic.entity.Entity;
+import com.csakcintanyer.bme.projlab.gamelogic.Game;
+import com.csakcintanyer.bme.projlab.gamelogic.entity.character.Character;
+import com.csakcintanyer.bme.projlab.gamelogic.map.IceBlock;
+import com.csakcintanyer.bme.projlab.gamelogic.map.IceMap;
+import com.csakcintanyer.bme.projlab.ui.View;
+
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;

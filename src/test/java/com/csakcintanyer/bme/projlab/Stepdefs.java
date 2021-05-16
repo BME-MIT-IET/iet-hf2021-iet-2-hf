@@ -4,6 +4,14 @@ import static junit.framework.Assert.assertEquals;
 
 import java.util.ArrayList;
 
+import com.csakcintanyer.bme.projlab.gamelogic.Direction;
+import com.csakcintanyer.bme.projlab.gamelogic.Game;
+import com.csakcintanyer.bme.projlab.gamelogic.item.Bullet;
+import com.csakcintanyer.bme.projlab.gamelogic.entity.character.Character;
+import com.csakcintanyer.bme.projlab.gamelogic.entity.character.Eskimo;
+import com.csakcintanyer.bme.projlab.gamelogic.entity.character.Explorer;
+import com.csakcintanyer.bme.projlab.gamelogic.item.*;
+import com.csakcintanyer.bme.projlab.gamelogic.map.*;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
