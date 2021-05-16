@@ -1,17 +1,12 @@
 package com.csakcintanyer.bme.projlab;
 
-import io.cucumber.java.an.E;
-import io.cucumber.java.bs.A;
-import io.cucumber.java.bs.I;
+import static junit.framework.Assert.assertEquals;
+
+import java.util.ArrayList;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import junit.framework.Assert;
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
-import static junit.framework.Assert.assertEquals;
 
 public class Stepdefs {
     private Game game = Game.get();
