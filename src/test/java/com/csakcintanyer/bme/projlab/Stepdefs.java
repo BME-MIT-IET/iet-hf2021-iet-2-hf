@@ -19,20 +19,47 @@ public class Stepdefs {
     private ArrayList<Character> characters = new ArrayList<Character>();
     private Character character;
 
+    /**
+     * Initalization steps
+     */
 
-    @Given("We have a {int} by {int} stable map")
-    public void we_have_a_by_stable_map(Integer int1, Integer int2) {
+    @Given("We have a {int} by {int} stable map, with {int} layer of snow")
+    public void we_have_a_by_stable_map_with_layer_of_snow(Integer int1, Integer int2, Integer int3) {
         ArrayList<IceBlock> rowBlocks;
         ArrayList<ArrayList<IceBlock>> blocks = new ArrayList<ArrayList<IceBlock>>();
 
         for(int i = 0; i < int1; i++){
             rowBlocks = new ArrayList<IceBlock>();
             for(int y = 0; y < int2; y++){
-                rowBlocks.add(new StableBlock(0));
+                rowBlocks.add(new StableBlock(int3));
             }
             blocks.add(rowBlocks);
         }
 
+        map = new IceMap(blocks);
+    }
+
+    @Given("We have an unstable map")
+    public void we_have_an_unstable_map() {
+        ArrayList<IceBlock> rowBlocks =new ArrayList<IceBlock>();
+        ArrayList<ArrayList<IceBlock>> blocks = new ArrayList<ArrayList<IceBlock>>();
+
+        rowBlocks.add(new UnstableBlock(0, 1));
+        rowBlocks.add(new UnstableBlock(0, 1));
+
+        blocks.add(rowBlocks);
+        map = new IceMap(blocks);
+    }
+
+    @Given("We have a map with a stable and an empty block")
+    public void we_have_a_map_with_a_stable_and_an_empty_block() {
+        ArrayList<IceBlock> rowBlocks =new ArrayList<IceBlock>();
+        ArrayList<ArrayList<IceBlock>> blocks = new ArrayList<ArrayList<IceBlock>>();
+
+        rowBlocks.add(new StableBlock(0));
+        rowBlocks.add(new EmptyBlock(0));
+
+        blocks.add(rowBlocks);
         map = new IceMap(blocks);
     }
 
@@ -62,6 +89,21 @@ public class Stepdefs {
         game.init(map, characters, null);
     }
 
+    @Given("There is another eskimo in the second block")
+    public void there_is_another_eskimo_in_the_second_block() {
+        Eskimo eskimo = new Eskimo(1);
+        characters.add(eskimo);
+
+        eskimo.setIceBlock(map.getBlocks().get(0).get(1));
+        map.getBlocks().get(0).get(1).getEntities().add(eskimo);
+
+        game.init(map, characters, null);
+    }
+
+    /**
+     * Character Move steps
+     */
+
     @When("The character moves right")
     public void the_character_moves_right() {
         character.move(Direction.RIGHT);
@@ -72,10 +114,28 @@ public class Stepdefs {
         assertEquals(character.getBlock(), map.getBlocks().get(0).get(1));
     }
 
-    @Then("The character should drown")
-    public void the_character_should_drown() {
+    /**
+     * Drowning assertion steps
+     */
+
+    @Then("The character shouldn't drown")
+    public void the_character_shouldnt_drown() {
         assertEquals(character.isDrowning(), false);
     }
+
+    @Then("The character starts drowning")
+    public void the_character_starts_drowning() {
+        assertEquals(character.isDrowning(), true);
+    }
+
+    @Then("The unstable block should brake")
+    public void the_unstable_block_should_brake() {
+        assertEquals(map.getBlocks().get(0).get(1).getStability(), 0);
+    }
+
+    /**
+     * Ability steps
+     */
 
     @When("Eskimo place an Igloo")
     public void eskimo_place_an_igloo() {
@@ -97,9 +157,67 @@ public class Stepdefs {
         assertEquals(map.getBlocks().get(0).get(0).isChecked(), true);
     }
 
+    /**
+     * Item using steps
+     */
+
+    @Given("A shovel is placed in the first block")
+    public void a_shovel_is_placed_in_the_first_block() {
+        map.getBlocks().get(0).get(0).setItem(new Shovel());
+    }
+
+    @Given("A fragile shovel is placed in the first block")
+    public void a_fragile_shovel_is_placed_in_the_first_block() {
+        map.getBlocks().get(0).get(0).setItem(new FragileShovel());
+    }
+
+    @Given("A tent is placed in the first block")
+    public void a_tent_is_placed_in_the_first_block() {
+        map.getBlocks().get(0).get(0).setItem(new Tent());
+    }
+
+    @When("The character clears the snow {int} times by hand")
+    public void the_character_clears_the_snow_times_by_hand(Integer int1) {
+        for (int i = 0; i < int1; i++){
+            character.clear();
+        }
+    }
+
+    @When("The character use the picked up item")
+    public void the_character_use_the_picked_up_item() {
+        character.useItem(0);
+    }
+
+    @Then("second block should be without snow")
+    public void second_block_should_be_without_snow() {
+        assertEquals(map.getBlocks().get(0).get(0).getSnow(), 0);
+    }
+
+    @Then("The fragile shovel should brake")
+    public void the_fragile_shovel_should_brake() {
+        assertEquals(character.getInventory().isEmpty(), true);
+    }
+
+    @Then("The first block should have a tent")
+    public void the_first_block_should_have_a_tent() {
+        assertEquals(map.getBlocks().get(0).get(0).hasTent(), true);
+    }
+
+    /**
+     * Game winning steps
+     */
+
     @Given("The items for win the game are placed on each block")
     public void the_items_for_win_the_game_are_placed_on_each_block() {
         map.getBlocks().get(0).get(0).setItem(new Flare());
+        map.getBlocks().get(0).get(1).setItem(new Bullet());
+        map.getBlocks().get(0).get(2).setItem(new Gun());
+    }
+
+
+    @Given("One winning item is not, but other winning items are placed on each block")
+    public void one_winning_item_is_not_but_other_winning_items_are_placed_on_each_block() {
+        //The missing piece is a flare in the first block
         map.getBlocks().get(0).get(1).setItem(new Bullet());
         map.getBlocks().get(0).get(2).setItem(new Gun());
     }
@@ -116,25 +234,12 @@ public class Stepdefs {
 
     @Then("The player should have won")
     public void the_player_should_have_won() {
-
         assertEquals(game.isWin(), true);
     }
-    @Given("We have an unstable map")
-    public void we_have_an_unstable_map() {
-        ArrayList<IceBlock> rowBlocks =new ArrayList<IceBlock>();
-        ArrayList<ArrayList<IceBlock>> blocks = new ArrayList<ArrayList<IceBlock>>();
 
-        rowBlocks.add(new StableBlock(0));
-        rowBlocks.add(new EmptyBlock(0));
-
-        blocks.add(rowBlocks);
-        map = new IceMap(blocks);
+    @Then("The player haven't won yet")
+    public void the_player_haven_t_won_yet() {
+        assertEquals(game.isWin(), false);
     }
-
-    @Then("The character starts drowning")
-    public void the_character_starts_drowning() {
-        assertEquals(character.isDrowning(), true);
-    }
-
 }
 
