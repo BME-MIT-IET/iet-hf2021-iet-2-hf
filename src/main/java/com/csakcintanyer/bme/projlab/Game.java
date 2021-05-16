@@ -1,6 +1,5 @@
 package com.csakcintanyer.bme.projlab;
 import java.awt.event.KeyEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -87,16 +86,9 @@ public class Game
                 /*
                  * Ha determinisztkus módban vagyunk, akkor a beállítot érték szerint annyi körönként hóvihar
                  * */
-                if (deterministic && turns % snowInXTurns == 0)
+                if (deterministic && turns % snowInXTurns == 0 || !deterministic && random.nextInt(10) <= 1)
                 {
                     snowStorm();
-                }
-                else if (!deterministic) //nem-determinisztikus módban
-                {
-                    if (random.nextInt(10) <= 1) // 20%
-                    {
-                        snowStorm();
-                    }
                 }
 
                 if (gameOver()) break;
@@ -112,6 +104,7 @@ public class Game
             View.get().repaint();
         } catch (InterruptedException e)
         {
+            // purposly empty
         }
     }
 
@@ -138,15 +131,11 @@ public class Game
     {
         if (currentlyMovingCharacter.move(dir))
         {
-            
-            if (bear != null) // ha van medve
+            if (bear != null && bearOnSameBlockWithCharacter()) // ha van medve
             {
-                if (bear.getBlock() == currentlyMovingCharacter.getBlock()) // ha medve van a jégtáblán
-                {
-                    lose(); // vesztettünk
-                    endTurn();
-                    return; // end of turn
-                }
+                lose(); // vesztettünk
+                endTurn();
+                return; // end of turn
             }
             
             if (currentlyMovingCharacter.isDrowning()) // ha fuldoklunk akkor vége a körünknek
@@ -154,6 +143,11 @@ public class Game
                 endTurnEvent.set();
             }
         }
+    }
+
+    private boolean bearOnSameBlockWithCharacter()
+    {
+        return bear.getBlock() == currentlyMovingCharacter.getBlock();
     }
 
     //Item használata
@@ -206,7 +200,7 @@ public class Game
     }
 
     //A bejövő gombokat kezelő függvény
-    public void UserAction(KeyEvent keyEvent)
+    public void userAction(KeyEvent keyEvent)
     {
         if (gameOver())
             return;
@@ -263,7 +257,8 @@ public class Game
                 Windows.get().controlsWindow.setVisible(true);
                 break;
             case KeyEvent.VK_B: //Játék mentése
-                IOLanguage.SaveToFile("save.txt");
+                IOLanguage.saveToFile("save.txt");
+                break;
             default:
         }
         
@@ -275,12 +270,11 @@ public class Game
 
     // a medvét mozgatása
     private void moveBear()
-    {
-        Random rand = new Random();
+    {        
         boolean moved = false;
         int randNum;
         do { // addig mozgatjuk, amíg nem talál egy random irány amerre van jégtábla
-            randNum = rand.nextInt(4);
+            randNum = random.nextInt(4);
             if (randNum == 0)
                 moved = bear.move(Direction.LEFT);
             if (randNum == 1)

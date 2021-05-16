@@ -1,5 +1,4 @@
 package com.csakcintanyer.bme.projlab;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
