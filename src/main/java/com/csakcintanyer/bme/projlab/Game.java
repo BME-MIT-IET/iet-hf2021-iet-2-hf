@@ -52,9 +52,6 @@ public class Game
 
         deterministic = true;
         snowInXTurns = 100;
-
-        View.get().init(map.N, map.M);
-        View.get().repaint();
     }
 
     // a jégmező, a játékosok és a medve beállítása determinisztikus módban
@@ -75,9 +72,6 @@ public class Game
     
         currentlyMovingCharacter = characters.get(0);
         resetSelectedIceBlock();
-    
-        View.get().init(map.N, map.M);
-        View.get().repaint();
     }
 
     // játék kezdése

@@ -84,6 +84,8 @@ public class InputWindow extends JFrame implements ActionListener
 		Windows.get().menuWindow.setVisible(false);
 
 		Game game = Game.get();
+		View.get().init(N, M);
+		View.get().repaint();
 		game.init(N, M);
 
 		MenuKeyEventListener listener = (MenuKeyEventListener)Windows.get().menuWindow.getKeyListeners()[0];
