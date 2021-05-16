@@ -1,8 +1,15 @@
 package com.csakcintanyer.bme.projlab;
 
+import io.cucumber.junit.Cucumber;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+import org.junit.runner.RunWith;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(plugin = {"pretty", "html:target/cucumber"})
 
 /**
  * Unit test for simple App.

@@ -26,7 +26,7 @@ public class Gun extends CollectableItem implements UsableItem
             throw new IllegalArgumentException("Cannot use gun");
         }
         
-        return false; // az ásót nem kell törölni az Inventory-ból
+        return false;
     }
     
     // gun kirajzolása
