@@ -99,7 +99,7 @@ class MenuKeyEventListener implements KeyListener
 				if (menuView.getCurrentMenuPoint()==View.get().loadgameIconColored.getImage())
 				{
 					window.setVisible(false);
-					IOLanguage.loadFile("save.txt");
+					IOLanguage.loadFile("lastSavedGameState.txt");
 					thread = new GameThread();
 					thread.start();
 				}

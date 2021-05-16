@@ -257,7 +257,7 @@ public class Game
                 Windows.get().controlsWindow.setVisible(true);
                 break;
             case KeyEvent.VK_B: //Játék mentése
-                IOLanguage.saveToFile("save.txt");
+                IOLanguage.saveToFile("lastSavedGameState.txt");
                 break;
             default:
         }
