@@ -18,12 +18,11 @@ public class IOLanguage
 		IceMap iceMap = null;
 		try ( // try-with-resources in Java
 			FileInputStream file = new FileInputStream(filePath);
-			ObjectInputStream in = new ObjectInputStream(file);
+			ObjectInputStream in = new ObjectInputStream(file)
 		)
 		{
 			// Reading the object from a file
 			iceMap = (IceMap) in.readObject();
-			in.close();
 		}
 		catch(IOException ex) { System.out.println("IOException is caught"); return; }
 		catch(ClassNotFoundException ex) { System.out.println("ClassNotFoundException is caught"); return; }
@@ -46,6 +45,8 @@ public class IOLanguage
 				}
 			}
 		}
+		View.get().init(iceMap.N, iceMap.M);
+		View.get().repaint();
 		Game.get().init(iceMap, characters, bear);
 	}
 	
