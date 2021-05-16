@@ -12,13 +12,13 @@ public abstract class IceBlock implements Serializable, Drawable
 {
     
     //item nélküli konstruktor
-    public IceBlock(int amountOfSnow, int stability)
+    protected IceBlock(int amountOfSnow, int stability)
     {
         this(amountOfSnow, stability, null);
     }
     
     //itemes konstruktor
-    public IceBlock(int amountOfSnow, int stability, CollectableItem item)
+    protected IceBlock(int amountOfSnow, int stability, CollectableItem item)
     {
         this.amountOfSnow = amountOfSnow;
         this.stability = stability;

@@ -20,7 +20,7 @@ public class InputWindow extends JFrame implements ActionListener
 	{
 		// init
 		super("Input");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setResizable(false);
 
 
@@ -99,12 +99,13 @@ public class InputWindow extends JFrame implements ActionListener
 
 class InputView extends JPanel
 {
-
+	@Override
 	public Dimension getPreferredSize()
 	{
 		return new Dimension(450, 50);
 	}
 
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.

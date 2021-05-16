@@ -19,12 +19,14 @@ public class ControlsWindow extends JFrame //Controls Ablak
 
 class ControlsView extends JPanel //Controls Panel
 {
+	@Override
 	public Dimension getPreferredSize()
 	{
 		return new Dimension(530, 484);
 	} //A kép méretére állítjuk a panelt
 
 	//Kirajzoljuk a Controls.png-t
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.

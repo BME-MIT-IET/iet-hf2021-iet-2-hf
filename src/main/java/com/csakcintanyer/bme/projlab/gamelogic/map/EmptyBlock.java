@@ -24,6 +24,7 @@ public class EmptyBlock extends IceBlock
         changeAmountOfSnow(0);
     }
     
+    @Override
     public void changeAmountOfSnow(int value)
     {
         // ha áll valaki rajta akkor nem esik rá hó

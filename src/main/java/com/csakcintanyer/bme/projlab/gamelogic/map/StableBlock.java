@@ -28,6 +28,7 @@ public class StableBlock extends IceBlock
         getEntities().remove(c);
     }
     
+    @Override
     public boolean placeIgloo()
     {
         if (hasIgloo) // ha már van iglu akkor sikertelen
@@ -38,6 +39,7 @@ public class StableBlock extends IceBlock
         return true; // sikeres
     }
     
+    @Override
     public boolean placeTent()
     {
         if (hasIgloo || hasTent) // ha van már iglu vagy másik sátor a jégtáblán -> sikertelen
@@ -48,24 +50,28 @@ public class StableBlock extends IceBlock
     }
     
     // van rajta igloo?
+    @Override
     public boolean hasIgloo()
     {
         return hasIgloo;
     }
     
     // van rajta tent?
+    @Override
     public boolean hasTent()
     {
         return hasTent;
     }
     
     // tent eltüntetése
+    @Override
     public void removeTent()
     {
         hasTent = false;
     }
     
     // az iceblock a terhelése maximumán van-e
+    @Override
     public boolean blockIsFull()
     {
         return false;

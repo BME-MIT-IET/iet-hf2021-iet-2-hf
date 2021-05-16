@@ -15,7 +15,7 @@ public class MenuKeyEventListener implements KeyListener
 	
 	
 	//menü irányítása
-	public void MenuAction(KeyEvent keyEvent)
+	public void menuAction(KeyEvent keyEvent)
 	{
 		Container view = window.getContentPane();
 		MenuView menuView = (MenuView) view;
@@ -117,7 +117,7 @@ public class MenuKeyEventListener implements KeyListener
 	@Override
 	public void keyReleased(KeyEvent keyEvent)
 	{
-		MenuAction(keyEvent);
+		menuAction(keyEvent);
 		window.repaint();
 	}
 }

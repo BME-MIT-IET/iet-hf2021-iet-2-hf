@@ -13,7 +13,7 @@ public abstract class Character extends Entity
 {
     
     // A karakter osztály rendelkezik egy ID-vel. Ez az ID egy indexként működik a Game osztály characters tömbjében
-    public Character(int ID)
+    protected Character(int ID)
     {
         this.ID = ID;
         setEnergy(4); // mindenkinek 4 energiája van
@@ -149,6 +149,7 @@ public abstract class Character extends Entity
     }
 
     // ennél a játékosnál van-e a Flare (egy játék során pontosan egy jelzőfény van)
+    @Override
     public boolean hasFlare()
     {
         return hasFlare;
@@ -161,6 +162,7 @@ public abstract class Character extends Entity
     }
 
     // ennél a játékosnál van-e a Bullet (egy játék során pontosan egy töltény van)
+    @Override
     public boolean hasBullet()
     {
         return hasBullet;

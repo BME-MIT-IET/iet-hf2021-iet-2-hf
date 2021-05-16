@@ -87,15 +87,13 @@ public class UnstableBlock extends IceBlock
         if (bear != null) bear.draw(x + 5, y);
     }
     
+    @Override
     public void changeAmountOfSnow(int value)
     {
-        if (stability == 0)
-        {
-            if (getEntities().size() > 0)
-            {
-                amountOfSnow = 0;
-                return;
-            }
+        if (stability == 0 && getEntities().size() > 0)
+        {            
+            amountOfSnow = 0;
+            return;
         }
     
         amountOfSnow += value;
