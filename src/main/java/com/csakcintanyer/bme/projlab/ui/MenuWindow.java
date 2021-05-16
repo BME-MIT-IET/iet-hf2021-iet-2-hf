@@ -1,8 +1,5 @@
 package com.csakcintanyer.bme.projlab.ui;
 
-import com.csakcintanyer.bme.projlab.ui.MenuKeyEventListener;
-import com.csakcintanyer.bme.projlab.ui.MenuView;
-
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 

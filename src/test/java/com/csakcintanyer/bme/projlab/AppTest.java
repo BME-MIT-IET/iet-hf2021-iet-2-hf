@@ -1,12 +1,12 @@
 package com.csakcintanyer.bme.projlab;
 
+import org.junit.runner.RunWith;
+
 import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import io.cucumber.junit.Cucumber;
-import io.cucumber.junit.CucumberOptions;
-import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(plugin = {"pretty", "html:target/cucumber"})
