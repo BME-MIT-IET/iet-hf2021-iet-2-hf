@@ -14,7 +14,7 @@ public class GameWindow extends JFrame //Játék ablaka
 	public GameWindow()
 	{
 		super("IceVenture");
-		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
 		setResizable(false);
 		
 		GameKeyEventListener listener = new GameKeyEventListener(this);
@@ -78,7 +78,7 @@ class GameKeyEventListener implements KeyListener //Az ablak által elkapott Key
 	
 	public void keyReleased(KeyEvent keyEvent)
 	{
-		Game.get().UserAction(keyEvent); //A gombok logikája a Game-ben található, így a keyEventet átadjuk a Game-nek.
+		Game.get().userAction(keyEvent); //A gombok logikája a Game-ben található, így a keyEventet átadjuk a Game-nek.
 		window.repaint();
 	}
 }
@@ -91,12 +91,14 @@ class GameView extends JPanel //Játék JPanelje
 	}
 
 	//Beállítjuk az ablak preferált méretét attól függően, hogy mekkora a pályánk
+	@Override
 	public Dimension getPreferredSize()
 	{
 		return new Dimension(View.get().N, View.get().M);
 	}
 
 	//Kirajzoljuk az összképet
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.

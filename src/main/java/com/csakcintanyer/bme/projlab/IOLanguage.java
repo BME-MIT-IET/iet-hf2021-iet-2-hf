@@ -1,26 +1,28 @@
 package com.csakcintanyer.bme.projlab;
 
-import java.io.*;
-import java.lang.reflect.Array;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
 
 public class IOLanguage
 {
+	// private constructor definition to hide the impicit public one
+	private IOLanguage() {}
+
 	// szerializált fájl betöltése
-	public static void LoadFile(String filePath)
+	public static void loadFile(String filePath)
 	{
 		IceMap iceMap = null;
-		try
+		try ( // try-with-resources in Java
+			FileInputStream file = new FileInputStream(filePath);
+			ObjectInputStream in = new ObjectInputStream(file)
+		)
 		{
 			// Reading the object from a file
-			FileInputStream file = new FileInputStream(filePath);
-			ObjectInputStream in = new ObjectInputStream(file);
-			
 			iceMap = (IceMap) in.readObject();
-			in.close();
-			file.close();
 		}
 		catch(IOException ex) { System.out.println("IOException is caught"); return; }
 		catch(ClassNotFoundException ex) { System.out.println("ClassNotFoundException is caught"); return; }
@@ -43,23 +45,21 @@ public class IOLanguage
 				}
 			}
 		}
+		View.get().init(iceMap.N, iceMap.M);
+		View.get().repaint();
 		Game.get().init(iceMap, characters, bear);
 	}
 	
 	// játékállá szerializálása
-	public static void SaveToFile(String filePath)
+	public static void saveToFile(String filePath)
 	{
-		try
-		{
-			//Saving of object in a file
+		try (
 			FileOutputStream file = new FileOutputStream(filePath);
 			ObjectOutputStream out = new ObjectOutputStream(file);
-			
+		)
+		{		
 			// Method for serialization of object
-			out.writeObject(Game.get().getIceMap());
-			
-			out.close();
-			file.close();
+			out.writeObject(Game.get().getIceMap());						
 		}
 		catch(IOException ex)
 		{

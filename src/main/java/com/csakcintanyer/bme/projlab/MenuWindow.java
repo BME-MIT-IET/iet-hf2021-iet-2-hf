@@ -1,17 +1,22 @@
 package com.csakcintanyer.bme.projlab;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.time.chrono.ThaiBuddhistEra;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 public class MenuWindow extends JFrame
 {
 	public MenuWindow()
 	{
 		super("Menu");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
 		
 		setContentPane(new MenuView());
@@ -94,7 +99,7 @@ class MenuKeyEventListener implements KeyListener
 				if (menuView.getCurrentMenuPoint()==View.get().loadgameIconColored.getImage())
 				{
 					window.setVisible(false);
-					IOLanguage.LoadFile("save.txt");
+					IOLanguage.loadFile("lastSavedGameState.txt");
 					thread = new GameThread();
 					thread.start();
 				}
@@ -105,6 +110,8 @@ class MenuKeyEventListener implements KeyListener
 					System.exit(0);
 				}
 				break;
+			default:
+
 		}
 	}
 
@@ -116,13 +123,13 @@ class MenuKeyEventListener implements KeyListener
 	@Override
 	public void keyTyped(KeyEvent keyEvent)
 	{
-	
+		// not used
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent keyEvent)
 	{
-	
+		// not used
 	}
 	
 	@Override
@@ -135,9 +142,8 @@ class MenuKeyEventListener implements KeyListener
 
 // játékmenetet futtató szál
 class GameThread extends Thread
-{
-	public GameThread() {}
-	
+{	
+	@Override
 	public void run()
 	{
 		View.get().repaint();
@@ -170,6 +176,7 @@ class MenuView extends JPanel
 		 currentMenuPoint=image;
 	}
 
+	@Override
 	public Dimension getPreferredSize()
 	{
 		return new Dimension(860, 960);
@@ -180,6 +187,7 @@ class MenuView extends JPanel
 	}
 
 	//Menü kirajzolása
+	@Override
 	protected void paintComponent(Graphics g)
 	{
 		super.paintComponent(g); //To change body of generated methods, choose Tools | Templates.
